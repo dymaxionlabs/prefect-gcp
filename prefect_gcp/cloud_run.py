@@ -202,6 +202,8 @@ class Execution(BaseModel):
 class CloudRunJobResult(InfrastructureResult):
     """Result from a Cloud Run Job."""
 
+    log_uri: str
+
 
 class CloudRunJob(Infrastructure):
     """
@@ -553,7 +555,7 @@ class CloudRunJob(Infrastructure):
                     f" Run Job {self.job_name}"
                 )
 
-        return CloudRunJobResult(identifier=self.job_name, status_code=status_code)
+        return CloudRunJobResult(identifier=self.job_name, status_code=status_code, log_uri=job_execution.log_uri)
 
     def _jobs_body(self) -> dict:
         """Create properly formatted body used for a Job CREATE request.
